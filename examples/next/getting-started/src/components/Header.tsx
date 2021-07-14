@@ -2,6 +2,7 @@ import React from 'react';
 import styles from 'scss/components/Header.module.scss';
 import Link from 'next/link';
 import { client, MenuLocationEnum } from 'client';
+import { useRouter } from 'next/router';
 
 interface Props {
   title?: string;
@@ -16,7 +17,7 @@ function Header({
   const links = menuItems({
     where: { location: MenuLocationEnum.PRIMARY },
   }).nodes;
-
+  const {locale, pathname} = useRouter()
   return (
     <header>
       <div className={styles.wrap}>
@@ -44,6 +45,11 @@ function Header({
                   href="https://github.com/wpengine/headless-framework">
                   GitHub
                 </a>
+              </Link>
+            </li>
+            <li>
+              <Link href={pathname ?? "/"} locale={locale === "de" ? "en" : "de"}>
+                <a>{locale === "de" ? "EN" : "DE"}</a>
               </Link>
             </li>
           </ul>
